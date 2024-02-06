@@ -3,6 +3,7 @@ import random
 import string
 from datetime import datetime, timedelta
 from dataclasses import dataclass
+import time
 
 
 @dataclass
@@ -24,7 +25,7 @@ class DataCreator:
         date_object = random_date.strftime('%Y-%m-%d') # 日付フォーマットを指定
 
         # str を　datetime型に変更
-        date_object = datetime.strptime(date_object, '%Y-%m-%d')
+        # date_object = datetime.strptime(date_object, '%Y-%m-%d')
 
         return date_object
 
@@ -37,4 +38,14 @@ class DataCreator:
             'birthday': [self.__generate_random_date() for _ in range(self.rand_len)],
         }
         return data
+
+def timer_decorator(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"{func.__name__}関数の実行時間: {end_time - start_time}秒")
+        return result
+
+    return wrapper
 
